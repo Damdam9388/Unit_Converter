@@ -2,4 +2,4 @@
 
 Projet Etudiant, Basé sur SPring et Tthymeleaf
 
-IDE recommandé : Eclipse
+IDE recommandé : Eclipse test 2
