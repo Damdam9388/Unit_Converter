@@ -23,17 +23,16 @@ public class controller {
         /**
          * The SI unit for area quantities (standard name <code>m2</code>).
          */
-        public static final Unit<Area> HECTARE = addUnitF(new ProductUnit<>(Units.SQUARE_METRE.divide(10000)),
-                Area.class);
+        Unit<Area> hectare = addUnit(new ProductUnit<>(Units.SQUARE_METRE.divide(10000)), Area.class);
 
         //	        Quantity<Area> m2 = Quantities.getQuantity(4000.0, SI.SQUARE_METRE);
 
         System.out.println(m2); //not working with exception
-        System.out.println(pop); //not working with exception
-        System.out.println(pop.divide(area));//not working with exception
+        System.out.println(hectare); //not working with exception
+        System.out.println(m2.divide(hectare));//not working with exception
 
-        System.out.println(pop.divide(area).getValue());
-        System.out.println(pop.divide(area).getUnit());
+        System.out.println(m2.divide(hectare).getValue());
+        System.out.println(m2.divide(hectare).getUnit());
 
     }
 
