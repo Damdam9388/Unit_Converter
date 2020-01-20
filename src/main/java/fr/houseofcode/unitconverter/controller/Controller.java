@@ -16,13 +16,17 @@ public class Controller {
 
         UnitConverter m2 = SI.SQUARE_METRE.getConverterTo(AdditionalUnits.HECTARE);
         UnitConverter ha = AdditionalUnits.HECTARE.getConverterTo(SI.SQUARE_METRE);
-        double value = m2.convert(4000);
+        double value1 = m2.convert(4000);
+        double value2 = ha.convert(4000);
 
         //System.out.println(m2); //not working with exception
         //System.out.println(hectare); //not working with exception
         //System.out.println(toto);
         System.out.println(m2);
-        System.out.println(value);
+        System.out.println(value1);
+
+        System.out.println(m2);
+        System.out.println(value2);
 
         //System.out.println(m2.divide(hectare));//not working with exception
         //System.out.println(m2.divide(hectare).getValue());
