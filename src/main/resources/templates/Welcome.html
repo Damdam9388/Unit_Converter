@@ -24,14 +24,14 @@
 <div class="jumbotron">
     <h1>Welcome on the only true unit converter</h1>
 
-    <form th:action="@{/convert}" method="post">
+    <form th:action="@{/convert}"  method="post">
         <div class="input-group input-group-lg inputValue">
-            <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
+            <input type="text" name="value" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
         </div>
         <div class="form-row">
 
             <div class="col">
-                <select id="inputState" class="form-control">
+                <select name="inputState" id="inputState" class="form-control">
                     <option selected>Choose a unit...</option>
                     <option>HTML</option>
                     <option>CSS</option>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="col">
-                <select id="outputState" class="form-control">
+                <select name="outputState" id="outputState" class="form-control">
                     <option selected>Choose a unit...</option>
                     <option>HTML</option>
                     <option>CSS</option>
@@ -55,6 +55,11 @@
 
         <input type="submit" value="convertir" class="btn btn-info btn-lg">
     </form>
+
+    <div>
+        <!--/*@thymesVar id="result" type=""*/-->
+        <p th:text="${result}"></p>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
