@@ -1,31 +1,30 @@
 package fr.houseofcode.unitconverter.controller;
 
-import javax.measure.UnitConverter;
+import java.util.HashMap;
+import java.util.Map;
 
-import fr.houseofcode.unitconverter.entity.InputContent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import fr.houseofcode.unitconverter.entity.AdditionalUnits;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import si.uom.SI;
+
+import fr.houseofcode.unitconverter.service.UnitConverterService;
 
 @Controller
 public class ConvertController {
 
+    @Autowired
+    private UnitConverterService unitConverterService;
+
     @RequestMapping("/convert")
-    @ResponseBody
-    public String unitConverter(Model model, @RequestParam InputContent data){
-//        UnitConverter m2 = SI.SQUARE_METRE.getConverterTo(AdditionalUnits.HECTARE);
-        UnitConverter ha = AdditionalUnits.HECTARE.getConverterTo(SI.SQUARE_METRE);
-//        double value1 = m2.convert(4000);
-//        double value2 = ha.convert(data.getValue());
-//        model.addAttribute("result", value2);
+    public String unitConverter(Model model, @RequestParam(required = false) double value) {
+        Map<String, String> map = new HashMap<>();
+        map.put("spring", "mvc");
+        model.addAttribute("result", unitConverterService.meterToHectare(value));
+        model.mergeAttributes(map);
+        return "welcome";
+        }
 
-        return "Welcome";
-    }
-
+    //    UnitConverter converter = sourceUnit.getConverterTo(targetUnit);
 }
