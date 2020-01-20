@@ -11,7 +11,7 @@ import si.uom.SI;
 @RestController
 public class Controller {
 
-    @RequestMapping("/")
+    @RequestMapping("/convert")
     public void main(String[] args) {
 
         UnitConverter m2 = SI.SQUARE_METRE.getConverterTo(AdditionalUnits.HECTARE);
