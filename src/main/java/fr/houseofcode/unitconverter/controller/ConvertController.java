@@ -31,7 +31,7 @@ public class ConvertController {
             Double res = null;
             //TODO Vérifier le output ?
 
-            if (data.getInputState().equals("m²")) {
+            if (data.getInputState().equals("m2")) {
                 res = unitConverterService.meterToHectare(data.getValue());
             } else if (data.getInputState().equals("Kw")) {
                 res = unitConverterService.kwatttoco2(data.getValue());
