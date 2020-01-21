@@ -1,7 +1,6 @@
 function change(){
-    var firstUnit = document.getElementById("inputState");
-    var secondUnit = document.getElementById("outputState");
-
-    console.log(firstUnit);
-    console.log(secondUnit);
+    var tmp = document.getElementById("inputState").value;
+    document.getElementById("inputState").value = document.getElementById("outputState").value;
+    document.getElementById("outputState").value = tmp;
 }
+

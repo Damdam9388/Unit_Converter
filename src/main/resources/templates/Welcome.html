@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport"
@@ -42,7 +42,7 @@
             <div class="card" style="background: transparent;border: none;">
                 <div class="card-body">
 
-                    <form th:action="@{/convert}" modelAttribute="data" method="post">
+                    <form th:action="@{/convert}" th:modelAttribute="data" method="post">
                         <div class="input-group input-group-lg inputValue">
                             <input type="text" name="value" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
                         </div>
@@ -51,9 +51,8 @@
                             <div class="col">
                                 <select name="inputState" id="inputState" class="form-control">
                                     <option selected>Choose a unit...</option>
-                                    <option>HTML</option>
-                                    <option>CSS</option>
-                                    <option>AJAX</option>
+                                    <option>m2</option>
+                                    <option>hectare</option>
                                 </select>
                             </div>
 
@@ -64,9 +63,9 @@
                             <div class="col">
                                 <select name="outputState" id="outputState" class="form-control">
                                     <option selected>Choose a unit...</option>
-                                    <option>HTML</option>
-                                    <option>CSS</option>
-                                    <option>AJAX</option>
+                                    <option>m2</option>
+                                    <option>hectare</option>
+
                                 </select>
                             </div>
                         </div>
