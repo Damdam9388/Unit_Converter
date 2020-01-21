@@ -41,7 +41,7 @@
         <div class="col-sm-6">
             <div class="card" style="background: transparent;border: none;">
                 <div class="card-body">
-                    <form th:action="@{/convert}" method="post">
+                    <form th:action="@{/convert}" modelAttribute="data" method="post">
                         <div class="input-group input-group-lg inputValue">
                             <input type="text" name="value" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
                         </div>
@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <div class="jumbotron-fluid" th:if="${result}">
+    <div class="jumbotron-fluid" th:if="${result}" style="text-align: center">
         <p style="font-size: 32px;font-weight: bold;color:black;">Your result man :</p>
         <!--/*@thymesVar id="result" type=""*/-->
         <p class="ulysse" th:text="${result}"></p>

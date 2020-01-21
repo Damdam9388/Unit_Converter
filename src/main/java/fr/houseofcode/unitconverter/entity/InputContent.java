@@ -5,11 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
 public class InputContent {
+    @NotNull
     private Double value;
     private String inputState;
     private String outputState;
