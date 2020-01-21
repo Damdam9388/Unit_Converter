@@ -7,6 +7,13 @@ h1{
 
 .jumbotron{
     height: 100vh;
+    background-image: url("/Watchtower-moon-mountains-forest-art-picture_1600x1200.jpg");
+}
+
+.jumbotron-fluid{
+    background-color: lightblue;
+    border-radius: 2px;
+    height: 20vh;
 }
 
 .col{
@@ -24,4 +31,10 @@ h1{
     margin-left: 45%;
     border:none;
     background-color: transparent;
+}
+
+.ulysse{
+    color: black;
+    font-weight: bold;
+    font-size: 32px;
 }

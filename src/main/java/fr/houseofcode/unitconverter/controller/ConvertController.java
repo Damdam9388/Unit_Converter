@@ -19,12 +19,16 @@ public class ConvertController {
     private UnitConverterService unitConverterService;
 
     @RequestMapping("/convert")
-    public String unitConverter(Model model, @RequestParam InputContent data) {
-        Map<String, String> map = new HashMap<>();
-        map.put("spring", "mvc");
-        model.addAttribute("result", unitConverterService.meterToHectare(data.getValue()));
-        model.mergeAttributes(map);
-        return "welcome";
+    public String unitConverter(Model model, @RequestParam(required = false) Double value) {
+        if(value == null){
+            return "Welcome";
+        } else {
+            Map<String, String> map = new HashMap<>();
+            map.put("spring", "mvc");
+            model.addAttribute("result", unitConverterService.meterToHectare(value));
+            model.mergeAttributes(map);
+            return "Welcome";
+        }
         }
 
     //    UnitConverter converter = sourceUnit.getConverterTo(targetUnit);

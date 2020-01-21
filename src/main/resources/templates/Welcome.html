@@ -24,7 +24,7 @@
 <div class="jumbotron">
     <h1>Welcome on the only true unit converter</h1>
 
-    <form th:action="@{/convert}"  method="post">
+    <form th:action="@{/convert}" method="post">
         <div class="input-group input-group-lg inputValue">
             <input type="text" name="value" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
         </div>
@@ -56,9 +56,11 @@
         <input type="submit" value="convertir" class="btn btn-info btn-lg">
     </form>
 
-    <div>
+
+    <div class="jumbotron-fluid" th:if="${result}">
+        <p style="font-size: 32px;font-weight: bold;color:black;">Your result man :</p>
         <!--/*@thymesVar id="result" type=""*/-->
-        <p th:text="${result}"></p>
+        <p class="ulysse" th:text="${result}"></p>
     </div>
 </div>
 
