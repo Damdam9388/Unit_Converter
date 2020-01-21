@@ -5,6 +5,7 @@ package fr.houseofcode.unitconverter.entity;
 
 import javax.measure.Unit;
 import javax.measure.quantity.Area;
+import javax.measure.quantity.Power;
 
 import tec.uom.se.AbstractUnit;
 import tec.uom.se.function.RationalConverter;
@@ -41,6 +42,8 @@ public class AdditionalUnits extends Units {
      * <code>ha</code>).
      */
     public static final Unit<Area> HECTARE = new TransformedUnit<Area>(SQUARE_METRE, new RationalConverter(10000, 1));
+
+    public static final Unit<Power> KWATT = new TransformedUnit<Power>(WATT, new RationalConverter(1000, 1));
 
     public static <U extends Unit<?>> U addUnit(U unit, String name, String symbol) {
         //        if (isLabel) {
