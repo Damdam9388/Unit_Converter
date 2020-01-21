@@ -24,38 +24,60 @@
 <div class="jumbotron">
     <h1>Welcome on the only true unit converter</h1>
 
-    <form th:action="@{/convert}" method="post">
-        <div class="input-group input-group-lg inputValue">
-            <input type="text" name="value" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
-        </div>
-        <div class="form-row">
-
-            <div class="col">
-                <select name="inputState" id="inputState" class="form-control">
-                    <option selected>Choose a unit...</option>
-                    <option>HTML</option>
-                    <option>CSS</option>
-                    <option>AJAX</option>
-                </select>
-            </div>
-
-            <div class="col">
-                <a href="#" class="fa fa-arrows-h" onclick="change()"></a>
-            </div>
-
-            <div class="col">
-                <select name="outputState" id="outputState" class="form-control">
-                    <option selected>Choose a unit...</option>
-                    <option>HTML</option>
-                    <option>CSS</option>
-                    <option>AJAX</option>
-                </select>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card" style="background-color: transparent; border: none;">
+                <div class="card-body">
+                    <p style="font-weight: bold;font-size: 25px;">Its easy to use, juste follow these steps :</p>
+                    <ul>
+                        <li>1. Enter a value</li>
+                        <li>2. Choose a start unit</li>
+                        <li>3. Choose an end unit</li>
+                        <li>4. Click on convert</li>
+                    </ul>
+                </div>
             </div>
         </div>
+        <div class="col-sm-6">
+            <div class="card" style="background: transparent;border: none;">
+                <div class="card-body">
+                    <form th:action="@{/convert}" method="post">
+                        <div class="input-group input-group-lg inputValue">
+                            <input type="text" name="value" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
+                        </div>
+                        <div class="form-row">
 
-        <input type="submit" value="convertir" class="btn btn-info btn-lg">
-    </form>
+                            <div class="col">
+                                <select name="inputState" id="inputState" class="form-control">
+                                    <option selected>Choose a unit...</option>
+                                    <option>HTML</option>
+                                    <option>CSS</option>
+                                    <option>AJAX</option>
+                                </select>
+                            </div>
 
+                            <div class="col">
+                                <a href="#" class="fa fa-arrows-h" onclick="change()"></a>
+                            </div>
+
+                            <div class="col">
+                                <select name="outputState" id="outputState" class="form-control">
+                                    <option selected>Choose a unit...</option>
+                                    <option>HTML</option>
+                                    <option>CSS</option>
+                                    <option>AJAX</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <input type="submit" value="convertir" class="btn btn-info btn-lg">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="jumbotron-fluid" th:if="${result}">
         <p style="font-size: 32px;font-weight: bold;color:black;">Your result man :</p>
