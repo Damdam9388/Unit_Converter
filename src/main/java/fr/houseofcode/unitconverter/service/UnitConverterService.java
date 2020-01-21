@@ -28,4 +28,21 @@ public class UnitConverterService {
         double value2 = ha.convert(value);
         return value2;
     }
+
+    public double watttokwatt(double value) {
+        UnitConverter kwatt = SI.WATT.getConverterTo(AdditionalUnits.KWATT);
+        double value1 = kwatt.convert(value);
+        return value1;
+    }
+
+    public double kwatttowatt(double value) {
+        UnitConverter watt = AdditionalUnits.KWATT.getConverterTo(AdditionalUnits.WATT);
+        double value1 = watt.convert(value);
+        return value1;
+    }
+
+    public double kwatttoco2(double value) {
+        return value * 0.09;
+    }
+
 }
