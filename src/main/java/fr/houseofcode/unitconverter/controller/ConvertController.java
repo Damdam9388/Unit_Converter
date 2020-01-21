@@ -1,9 +1,8 @@
 package fr.houseofcode.unitconverter.controller;
 
 import fr.houseofcode.unitconverter.entity.InputContent;
-import fr.houseofcode.unitconverter.exceptions.unitException;
+import fr.houseofcode.unitconverter.exceptions.UnitException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -12,12 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import fr.houseofcode.unitconverter.entity.InputContent;
 import fr.houseofcode.unitconverter.service.UnitConverterService;
 
-import javax.measure.UnitConverter;
 import javax.validation.Valid;
-import java.sql.SQLException;
 
 @Controller
 public class ConvertController {
@@ -28,8 +24,15 @@ public class ConvertController {
     }
 
     @ExceptionHandler({BindException.class})
+    @ResponseBody
     public String valueException(){
         return "BindException";
+    }
+
+    @ExceptionHandler({UnitException.class})
+    @ResponseBody
+    public String unitExceptionHandler(UnitException uE){
+        return uE.getMessage();
     }
 
     @GetMapping("/convert")
@@ -51,7 +54,7 @@ public class ConvertController {
 
             model.addAttribute("result", res);
         }else if(data.getValue() < 0){
-            throw new unitException("you cannot insert a negative number");
+            throw new UnitException("you cannot insert a negative number");
         }
         return "Welcome";
     }
