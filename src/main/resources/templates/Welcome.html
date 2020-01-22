@@ -22,76 +22,29 @@
 </nav>
 
 <div class="jumbotron">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6 mx-auto">
-
-                        <!-- form card login -->
-                        <div class="card rounded-0" style="margin-top: 15%;opacity: 90%">
-                            <div class="card-header" style="text-align: center;">
-                                <h3 class="mb-0">Unit converter</h3>
-                            </div>
-                            <div class="card-body">
-                                <form th:action="@{/convert}" th:object="${data}" th:modelAttribute="data" method="post">
-                                    <div class="form-group">
-                                        <input type="text" name="value" th:field="*{value}" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value..."/>
-                                        <p th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputState"></label>
-                                        <select name="inputState" id="inputState" class="form-control">
-                                            <option selected>Choose a unit...</option>
-                                            <option>m2</option>
-                                            <option>hectare</option>
-                                            <option>Kw</option>
-                                            <option>Co2</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group" style="text-align: center;">
-                                        <a href="#" class="fa fa-arrows-h" onclick="change()"></a>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="outputState"></label>
-                                        <select name="outputState" id="outputState" class="form-control">
-                                            <option selected>Choose a unit...</option>
-                                            <option>m2</option>
-                                            <option>hectare</option>
-                                            <option>Kw</option>
-                                            <option>Co2</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group" style="text-align: center;">
-                                        <input type="submit" value="convertir" class="btn btn-info btn-lg">
-                                    </div>
-                                    <div class="form-group" th:if="${result}" style="text-align: center;">
-                                        <p style="font-size: 22px;font-weight: bold;color:black;">Le résultat que vous avez demandé est :</p>
-                                        <!--/*@thymesVar id="result" type=""*/-->
-                                        <p class="ulysse" th:text="${result}"></p>
-                                    </div>
-
-                                </form>
-                            </div>
-                            <!--/card-block-->
-                        </div>
-                        <!-- /form card login -->
-
+    <h1 style="color: white">WELCOME ON UNIT CONVERTER</h1>
+    <div class="container justify-content-center">
+        <div class="row justify-content-center" style="margin-top: 35%">
+            <div class="col-sm-4">
+                <div class="card other-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
-
-
                 </div>
-                <!--/row-->
-
             </div>
-            <!--/col-->
+            <div class="col-sm-4">
+                <div class="card special-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>-->
-<script th:src="@{/js/changeOrder.js}"></script>
 </body>
 </html>

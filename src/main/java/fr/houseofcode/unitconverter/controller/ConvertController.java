@@ -37,14 +37,19 @@ public class ConvertController {
     }
 
     @GetMapping("/convert")
-    public String unitForm(){
-        return "Welcome";
+    public String unitForm(Model model){
+        InputContent res = new InputContent();
+        model.addAttribute("result", res);
+        return "Converter";
     }
 
     @PostMapping("/convert")
     public String unitConverter(Model model, @Valid @ModelAttribute("data")InputContent data, BindingResult bindingResult) {
+        InputContent res2 = new InputContent();
         if(bindingResult.hasErrors()){
-            return "Welcome";
+            model.addAttribute("errorMessage", "Veuillez corriger les erreurs suivantes :");
+            model.addAttribute("bindingResult", bindingResult);
+            return "Converter";
         } else if (data.getValue() > 0 && !bindingResult.hasErrors()){
             Double res = null;
             if (data.getInputState().equals("m2") && data.getOutputState().equals("hectare")) {
@@ -52,11 +57,18 @@ public class ConvertController {
             } else if (data.getInputState().equals("Kw") && data.getOutputState().equals("Co2")) {
                 res = unitConverterService.kwatttoco2(data.getValue());
             }
-            model.addAttribute("result", res);
+
+            res2.setInputState(data.getInputState());
+            res2.setOutputState(data.getOutputState());
+            res2.setValue(res);
+            model.addAttribute("dataValue", data.getValue());
+            model.addAttribute("inputUnit", data.getInputState());
+            model.addAttribute("outputUnit", data.getOutputState());
+            model.addAttribute("result", res2);
         }else if(data.getValue() < 0){
-            throw new UnitException("you cannot insert a negative number");
+            model.addAttribute("negativeNumber", "you cannot insert negative number");
         }
 
-        return "Welcome";
+        return "Converter";
     }
 }

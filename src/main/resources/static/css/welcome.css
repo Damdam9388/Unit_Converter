@@ -51,6 +51,15 @@ h1{
 
 ul{
     list-style: none;
-    font-size: 25px;
     font-weight: bold;
+    text-align: center;
+}
+
+.special-card{
+    background-color: #0062cc8f;
+
+}
+
+.other-card{
+    background-color: #bd213075;
 }

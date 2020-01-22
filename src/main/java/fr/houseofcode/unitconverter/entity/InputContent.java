@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -12,10 +13,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 public class InputContent {
-    @NotNull
+    @NotNull(message = "la valeur ne peut pas être nulle")
     private Double value;
-    @NotNull
+    @NotEmpty(message = "vous devez rentrer une unité de départ")
     private String inputState;
-    @NotNull
+    @NotEmpty(message = "vous devez renseigner une unité de sortie")
     private String outputState;
 }
