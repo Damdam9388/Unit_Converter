@@ -22,70 +22,65 @@
 </nav>
 
 <div class="jumbotron">
-    <h1>Welcome on the only true unit converter</h1>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card" style="background-color: transparent; border: none;">
-                <div class="card-body">
-                    <p style="font-weight: bold;font-size: 25px;">Its easy to use, juste follow these steps :</p>
-                    <ul>
-                        <li>1. Enter a value</li>
-                        <li>2. Choose a start unit</li>
-                        <li>3. Choose an end unit</li>
-                        <li>4. Click on convert</li>
-                    </ul>
+                        <!-- form card login -->
+                        <div class="card rounded-0" style="margin-top: 15%;opacity: 90%">
+                            <div class="card-header" style="text-align: center;">
+                                <h3 class="mb-0">Unit converter</h3>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/convert}" th:modelAttribute="data" method="post">
+                                    <div class="form-group">
+                                        <input type="text" name="value" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="inputState" id="inputState" class="form-control">
+                                            <option selected>Choose a unit...</option>
+                                            <option>m2</option>
+                                            <option>hectare</option>
+                                            <option>Kw</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="text-align: center;">
+                                        <a href="#" class="fa fa-arrows-h" onclick="change()"></a>
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="outputState" id="outputState" class="form-control">
+                                            <option selected>Choose a unit...</option>
+                                            <option>m2</option>
+                                            <option>hectare</option>
+                                            <option>Kw</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="text-align: center;">
+                                        <input type="submit" value="convertir" class="btn btn-info btn-lg">
+                                    </div>
+                                    <div class="form-group"  th:if="${result}">
+                                        <p style="font-size: 32px;font-weight: bold;color:black;">Your result man :</p>
+                                        <!--/*@thymesVar id="result" type=""*/-->
+                                        <p class="ulysse" th:text="${result}"></p>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <!--/card-block-->
+                        </div>
+                        <!-- /form card login -->
+
+                    </div>
+
+
                 </div>
+                <!--/row-->
+
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card" style="background: transparent;border: none;">
-                <div class="card-body">
+            <!--/col-->
 
-                    <form th:action="@{/convert}" th:modelAttribute="data" method="post">
-                        <div class="input-group input-group-lg inputValue">
-                            <input type="text" name="value" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="value...">
-                        </div>
-                        <div class="form-row">
-
-                            <div class="col">
-                                <select name="inputState" id="inputState" class="form-control">
-                                    <option selected>Choose a unit...</option>
-                                    <option>m2</option>
-                                    <option>hectare</option>
-                                    <option>Kw</option>
-                                </select>
-                            </div>
-
-                            <div class="col">
-                                <a href="#" class="fa fa-arrows-h" onclick="change()"></a>
-                            </div>
-
-                            <div class="col">
-                                <select name="outputState" id="outputState" class="form-control">
-                                    <option selected>Choose a unit...</option>
-                                    <option>m2</option>
-                                    <option>hectare</option>
-                                    <option>Kw</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <div style="text-align: center">
-                            <input type="submit" value="convertir" class="btn btn-info btn-lg">
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="jumbotron-fluid" th:if="${result}" style="text-align: center">
-        <p style="font-size: 32px;font-weight: bold;color:black;">Your result man :</p>
-        <!--/*@thymesVar id="result" type=""*/-->
-        <p class="ulysse" th:text="${result}"></p>
-    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -28,14 +28,11 @@ h1{
 }
 
 .form-control{
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    border-radius: 0%;
 }
 
 .fa-arrows-h{
     font-size: 40px;
-    margin-left: 35%;
     border:none;
     background-color: transparent;
     color: black;
