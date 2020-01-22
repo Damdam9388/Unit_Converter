@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,21 +42,21 @@ public class ConvertController {
     }
 
     @PostMapping("/convert")
-    public String unitConverter(Model model, @Valid @ModelAttribute("data")InputContent data) {
-        if (data.getValue() > 0){
+    public String unitConverter(Model model, @Valid @ModelAttribute("data")InputContent data, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "Welcome";
+        } else if (data.getValue() > 0 && !bindingResult.hasErrors()){
             Double res = null;
-            //TODO Vérifier le output ?
-
             if (data.getInputState().equals("m2") && data.getOutputState().equals("hectare")) {
                 res = unitConverterService.meterToHectare(data.getValue());
             } else if (data.getInputState().equals("Kw") && data.getOutputState().equals("Co2")) {
                 res = unitConverterService.kwatttoco2(data.getValue());
             }
-
             model.addAttribute("result", res);
         }else if(data.getValue() < 0){
             throw new UnitException("you cannot insert a negative number");
         }
+
         return "Welcome";
     }
 }

@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 public class InputContent {
     @NotNull
     private Double value;
+    @NotNull
     private String inputState;
+    @NotNull
     private String outputState;
 }
