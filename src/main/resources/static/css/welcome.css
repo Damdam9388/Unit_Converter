@@ -57,9 +57,20 @@ ul{
 
 .special-card{
     background-color: #0062cc8f;
+    color:black;
 
 }
 
 .other-card{
     background-color: #bd213075;
+    color: black;
+}
+
+.card-body{
+    color: black;
+}
+
+.card-text{
+    color: black;
+    font-weight: 600;
 }
