@@ -32,30 +32,25 @@
     </ul>
 </nav>
 
-<div class="jumbotron">
-    <h1 style="color: white">WELCOME ON UNIT CONVERTER</h1>
-    <div class="container justify-content-center">
-        <div class="row justify-content-center" style="margin-top: 35%">
-            <div class="col-sm-4">
-                <div class="card other-card">
-                    <div class="card-body">
-                        <p class="card-text">Utilise le converter</p>
-                        <p class="card-text">Tu vas t'éclater !</p>
-                        <a href="/convert" class="btn btn-primary">Go converter !</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card special-card">
-                    <div class="card-body">
-                        <p class="card-text" style="color: black;">Consulte la liste des unités !</p>
-                        <p class="card-text">Invente, modifie !</p>
-                        <a href="/unitList" class="btn btn-primary">Consulte la liste des unités</a>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <form action="#" th:action="@{/saveUnit}" th:object="${unity}" method="post" style="margin-top: 10%">
+
+        <div class="form-group">
+            <label for="unitDef">Definition</label>
+            <input type="text" th:field="*{definition}" class="form-control" id="unitDef">
+            <span th:if="${#fields.hasErrors('definition')}" th:errors="*{definition}"></span>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="unitSymbole">Symbole</label>
+            <input type="text" th:field="*{symbole}" class="form-control" id="unitSymbole">
+            <span th:if="${#fields.hasErrors('symbole')}" th:errors="*{symbole}"></span>
+        </div>
+
+        <input type="submit" value="Add Unity" class="btn btn-info">
+    </form>
+
 </div>
+
 </body>
 </html>

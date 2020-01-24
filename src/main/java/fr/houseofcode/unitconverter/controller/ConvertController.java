@@ -78,6 +78,7 @@ public class ConvertController {
         } else if(data.getValue() < 0 && !bindingResult.hasErrors()) {
             errorsApi.negativeNumberError(model);
             model.addAttribute("result", data);
+            return "Converter";
 
         }else if (data.getValue() > 0 && !bindingResult.hasErrors()){
             Double res = calculMethodToChoose(data);

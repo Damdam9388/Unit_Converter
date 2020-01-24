@@ -18,27 +18,6 @@ public class Unity {
     @ManyToOne
     private Source source;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSymbole() {
-        return symbole;
-    }
-
-    public void setSymbole(String symbole) {
-        this.symbole = symbole;
-    }
-
-    public Source getSource() {
-        return source;
-    }
-
-    public void setSource(Source source) {
-        this.source = source;
-    }
-
-
     @Override
     public String toString() {
         return String.format(
