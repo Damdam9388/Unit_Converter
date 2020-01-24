@@ -17,9 +17,6 @@ import fr.houseofcode.unitconverter.service.UnitConverterService;
 import si.uom.SI;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -84,12 +81,10 @@ public class ConvertController {
 
         }else if (data.getValue() > 0 && !bindingResult.hasErrors()){
             Double res = calculMethodToChoose(data);
-            DecimalFormat decimalFormat = new DecimalFormat("0.###");
-            String result = decimalFormat.format(res).replace(",", ".");
 
             res2.setInputState(data.getInputState());
             res2.setOutputState(data.getOutputState());
-            res2.setValue(Double.parseDouble(result));
+            res2.setValue(res);
 
             addAttributeToModel(model, data, res2);
 
