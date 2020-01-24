@@ -70,6 +70,7 @@ public class ConvertController {
     @PostMapping("/convert")
     public String unitConverter(Model model, @Valid @ModelAttribute("data")InputContent data, BindingResult bindingResult) {
         InputContent res2 = new InputContent();
+
         if(bindingResult.hasErrors()){
             errorsApi.bindingResultError(model, bindingResult);
             model.addAttribute("result",data);
@@ -80,7 +81,7 @@ public class ConvertController {
             model.addAttribute("result", data);
             return "Converter";
 
-        }else if (data.getValue() > 0 && !bindingResult.hasErrors()){
+        }else if(data.getValue() > 0 && !bindingResult.hasErrors()){
             Double res = calculMethodToChoose(data);
 
             res2.setInputState(data.getInputState());
@@ -91,9 +92,8 @@ public class ConvertController {
 
         } else {
             model.addAttribute("result", data);
+
         }
-
-
         return "Converter";
     }
 
@@ -108,7 +108,6 @@ public class ConvertController {
         } else if (data.getInputState().equals("Co2") && data.getOutputState().equals("Kw")) {
             res = unitConverterService.convertKwattCo2(data.getValue(), data);
         }
-
 
         return res;
     }
