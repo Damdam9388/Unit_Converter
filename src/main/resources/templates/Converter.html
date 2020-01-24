@@ -62,7 +62,7 @@
                                 </div>
                                     <span th:text="${errorMessage}"></span>
                                     <div class="alert alert-danger alert-dismissible col-sm-12"
-                                    th:if="${bindingResult.getAllErrors() != null}">
+                                    th:if="${bindingResult != null && bindingResult.getAllErrors() != null}">
                                         <ul th:each="data : ${bindingResult.getAllErrors()}">
                                             <li th:text="${data.getDefaultMessage()}"></li>
                                         </ul>
