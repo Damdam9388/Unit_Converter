@@ -17,6 +17,9 @@ import fr.houseofcode.unitconverter.service.UnitConverterService;
 import si.uom.SI;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -81,10 +84,12 @@ public class ConvertController {
 
         }else if (data.getValue() > 0 && !bindingResult.hasErrors()){
             Double res = calculMethodToChoose(data);
+            DecimalFormat decimalFormat = new DecimalFormat("0.###");
+            String result = decimalFormat.format(res).replace(",", ".");
 
             res2.setInputState(data.getInputState());
             res2.setOutputState(data.getOutputState());
-            res2.setValue(res);
+            res2.setValue(Double.parseDouble(result));
 
             addAttributeToModel(model, data, res2);
 
@@ -98,13 +103,17 @@ public class ConvertController {
 
     private Double calculMethodToChoose(InputContent data){
         Double res = null;
-        if (data.getInputState().equals("m2") || data.getInputState().equals("hectare")) {
+        if (data.getInputState().equals("m2") && data.getOutputState().equals("hectare")) {
             res = unitConverterService.convert(data.getValue(), SI.SQUARE_METRE, AdditionalUnits.HECTARE);
+        }else if(data.getInputState().equals("hectare") && data.getOutputState().equals("m2")) {
+            res = unitConverterService.convert(data.getValue(), AdditionalUnits.HECTARE, SI.SQUARE_METRE);
         } else if (data.getInputState().equals("Kw") && data.getOutputState().equals("Co2")) {
             res = unitConverterService.convertKwattCo2(data.getValue(), data);
         } else if (data.getInputState().equals("Co2") && data.getOutputState().equals("Kw")) {
             res = unitConverterService.convertKwattCo2(data.getValue(), data);
         }
+
+
         return res;
     }
 

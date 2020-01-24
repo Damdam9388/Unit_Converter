@@ -58,16 +58,17 @@
                                     </div>
                                     <div class="form-group" th:if="${result?.getValue()}" style="text-align: center;">
                                     <p style="font-size: 22px;font-weight: bold;color:black;">Le résultat que vous avez demandé est :</p>
-                                    <p class="ulysse" th:text="|${dataValue} ${inputUnit} correspond à ${result.getValue()} ${outputUnit}|"></p>
+                                    <p class="ulysse" th:text="|${dataValue} ${inputUnit} correspond à ${#numbers.formatDecimal(result.getValue(), 0, 3, 'POINT')} ${outputUnit}|"></p>
                                 </div>
                                     <span th:text="${errorMessage}"></span>
                                     <div class="alert alert-danger alert-dismissible col-sm-12"
-                                    th:if="${bindingResult != null && bindingResult.getAllErrors() != null}">
+                                    th:if="${bindingResult.getAllErrors() != null}">
                                         <ul th:each="data : ${bindingResult.getAllErrors()}">
                                             <li th:text="${data.getDefaultMessage()}"></li>
                                         </ul>
                                     </div>
                                 </form>
+                                <!--/*@thymesVar id="negativeNumber" type=""*/-->
                                 <div class="alert alert-danger alert-dismissible col-sm-12" th:if="${negativeNumber}" style="text-align: center;">
                                     <span th:text="${negativeNumber}" style="font-weight: bold;"></span>
                                 </div>
