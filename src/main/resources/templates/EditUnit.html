@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="layout/Head.html :: head"></head>
+<body>
+<header th:insert="layout/Navbar.html :: header"></header>
+
+<div class="container">
+    <!--/*@thymesVar id="unity" type=""*/-->
+    <form action="#"
+          th:action="@{/edit/{id}(id=${unit.id})}"
+          th:object="${unit}"
+          method="post" style="margin-top: 10%">
+        <div class="form-group">
+        <label for="unitId">Id</label>
+        <input type="text" class="form-control" th:field="*{id}" id="unitId" disabled>
+        <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+        </div>
+
+        <div class="form-group">
+        <label for="unitDef">Definition</label>
+        <input type="text" class="form-control" th:field="*{definition}" id="unitDef" placeholder="definition...">
+        <span th:if="${#fields.hasErrors('definition')}" th:errors="*{definition}"></span>
+        </div>
+
+        <div class="form-group">
+        <label for="unitSymbol">Symbole</label>
+        <input type="text" class="form-control" th:field="*{symbole}" id="unitSymbol" placeholder="Symbole...">
+        <span th:if="${#fields.hasErrors('symbole')}" th:errors="*{symbole}"></span>
+        </div>
+
+        <input type="submit" value="Update Unit" class="btn btn-info">
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="layout/Head.html :: head"></head>
+<body>
+<header th:insert="layout/Navbar.html :: header"></header>
+
+<div class="container">
+    <table class="table" style="margin-top: 10%">
+        <thead class="thead-dark">
+        <tr>
+            <th scope = "col">Id</th>
+            <th scope="col">Definition</th>
+            <th scope="col">Symbole</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${unities == null}">
+            <td colspan="2"> No Unity Available </td>
+        </tr>
+        <tr th:each="unit : ${unities}">
+            <th scope="row" th:text="${unit.id}"></th>
+            <td th:text="${unit.definition}"></td>
+            <td th:text="${unit.symbole}"></td>
+            <td><a class="btn btn-info" th:href="@{/edit/{id}(id=${unit.id})}">edit</a></td>
+            <td><a class="btn btn-danger" th:href="@{/delete/{id}(id=${unit.id})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/addUnit" class="btn btn-info">Ajout d'une unité</a>
+
+</div>
+
+</body>
+</html>

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @Getter
@@ -19,4 +20,7 @@ public class InputContent {
     private String inputState;
     @NotEmpty(message = "vous devez renseigner une unité de sortie")
     private String outputState;
+
+    private  List<String> allInputData;
+
 }

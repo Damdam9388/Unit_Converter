@@ -1,26 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0" />
-
-    <meta name="description" content="The Dap trainning project admin" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Data Access Project" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" th:href="@{/css/welcome.css}"/>
-
-    <title>Unit converter</title>
-
-</head>
+<head th:insert="layout/Head.html :: head"></head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Unit Converter</a>
-</nav>
-
+<header th:insert="layout/Navbar.html :: header"></header>
 <div class="jumbotron">
     <div class="container py-5">
         <div class="row">
@@ -40,12 +21,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputState">Choose a value :</label>
-                                        <select name="inputState" id="inputState" class="form-control">
-                                            <option selected></option>
-                                            <option>m2</option>
-                                            <option>hectare</option>
-                                            <option>Kw</option>
-                                            <option>Co2</option>
+                                        <select name="inputState" id="inputState" class="form-control" th:field="*{inputState}">
+                                            <option th:each="inp : ${unitList}" th:value="${inp}" th:text="${inp}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group" style="text-align: center;">
@@ -53,12 +30,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="outputState">Choose a value :</label>
-                                        <select name="outputState" id="outputState" class="form-control">
-                                            <option selected></option>
-                                            <option>m2</option>
-                                            <option>hectare</option>
-                                            <option>Kw</option>
-                                            <option>Co2</option>
+                                        <select name="outputState" id="outputState" class="form-control" th:field="*{outputState}">
+                                            <option th:each="inp : ${unitList}" th:value="${inp}" th:text="${inp}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group" style="text-align: center;">
@@ -66,7 +39,7 @@
                                     </div>
                                     <div class="form-group" th:if="${result?.getValue()}" style="text-align: center;">
                                     <p style="font-size: 22px;font-weight: bold;color:black;">Le résultat que vous avez demandé est :</p>
-                                    <p class="ulysse" th:text="|${dataValue} ${inputUnit} correspond à ${result.getValue()} ${outputUnit}|"></p>
+                                    <p class="ulysse" th:text="|${dataValue} ${inputUnit} correspond à ${#numbers.formatDecimal(result.getValue(), 0, 3, 'POINT')} ${outputUnit}|"></p>
                                 </div>
                                     <span th:text="${errorMessage}"></span>
                                     <div class="alert alert-danger alert-dismissible col-sm-12"
@@ -74,9 +47,9 @@
                                         <ul th:each="data : ${bindingResult.getAllErrors()}">
                                             <li th:text="${data.getDefaultMessage()}"></li>
                                         </ul>
-
                                     </div>
                                 </form>
+                                <!--/*@thymesVar id="negativeNumber" type=""*/-->
                                 <div class="alert alert-danger alert-dismissible col-sm-12" th:if="${negativeNumber}" style="text-align: center;">
                                     <span th:text="${negativeNumber}" style="font-weight: bold;"></span>
                                 </div>
@@ -84,9 +57,7 @@
                             <!--/card-block-->
                         </div>
                         <!-- /form card login -->
-
                     </div>
-
 
                 </div>
                 <!--/row-->
