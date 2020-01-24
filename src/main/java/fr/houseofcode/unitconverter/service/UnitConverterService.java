@@ -1,7 +1,10 @@
 package fr.houseofcode.unitconverter.service;
 
+import javax.measure.Quantity;
+import javax.measure.Unit;
 import javax.measure.UnitConverter;
 
+import fr.houseofcode.unitconverter.entity.InputContent;
 import org.springframework.stereotype.Service;
 
 import fr.houseofcode.unitconverter.entity.AdditionalUnits;
@@ -14,29 +17,26 @@ import si.uom.SI;
 @Service
 public class UnitConverterService {
 
-    public double meterToHectare(double value) {
-        UnitConverter m2 = SI.SQUARE_METRE.getConverterTo(AdditionalUnits.HECTARE);
-        return m2.convert(value);
+    private Double result = null;
+
+    public Double convertKwattCo2(double value, InputContent data){
+        if(data.getInputState().equals("Kw") && data.getOutputState().equals("Co2")){
+            result = convert(value, SI.WATT,AdditionalUnits.KWATT);
+            result = result * 0.09;
+        } else if(data.getInputState().equals("Co2") && data.getOutputState().equals("Kw")){
+            UnitConverter watt = AdditionalUnits.KWATT.getConverterTo(AdditionalUnits.WATT);
+            result = watt.convert(value);
+            result = result / 0.09;
+        }
+        return result;
     }
 
-    public double hectareToMeter(double value) {
-        UnitConverter ha = AdditionalUnits.HECTARE.getConverterTo(SI.SQUARE_METRE);
-        return ha.convert(value);
+
+    public <Q extends Quantity<Q>> Double convert(double value, Unit<Q> source, Unit<Q> dest){
+        UnitConverter unit = source.getConverterTo(dest);
+        result = unit.convert(value);
+        return result;
     }
 
-    public double watttokwatt(double value) {
-        UnitConverter kwatt = SI.WATT.getConverterTo(AdditionalUnits.KWATT);
-        return kwatt.convert(value);
-    }
-
-    public double kwatttowatt(double value) {
-        UnitConverter watt = AdditionalUnits.KWATT.getConverterTo(AdditionalUnits.WATT);
-        return watt.convert(value);
-    }
-
-    public double kwatttoco2(double value) {
-        return value * 0.09;
-    }
-    public double co2ToKwatt(double value) {return value / 0.09; }
 
 }

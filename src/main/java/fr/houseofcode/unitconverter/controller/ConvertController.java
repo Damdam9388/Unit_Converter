@@ -1,7 +1,8 @@
 package fr.houseofcode.unitconverter.controller;
 
-import fr.houseofcode.unitconverter.entity.InputContent;
+import fr.houseofcode.unitconverter.entity.*;
 import fr.houseofcode.unitconverter.exceptions.UnitException;
+import fr.houseofcode.unitconverter.service.ErrorsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +14,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import fr.houseofcode.unitconverter.service.UnitConverterService;
+import si.uom.SI;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class ConvertController {
     private UnitConverterService unitConverterService;
+    private ErrorsApi errorsApi;
+    private UnityRespository unityRespository;
 
-    public ConvertController(@Autowired UnitConverterService unitConverterService){
+    public ConvertController(@Autowired UnitConverterService unitConverterService, @Autowired ErrorsApi errorsApi, @Autowired UnityRespository unityRespository){
         this.unitConverterService = unitConverterService;
+        this.errorsApi = errorsApi;
+        this.unityRespository = unityRespository;
     }
 
     @ExceptionHandler({BindException.class})
@@ -37,16 +45,24 @@ public class ConvertController {
         return uE.getMessage();
     }
 
+    @ModelAttribute("unitList")
+    public Collection<SymbolOnly> loadAllInputData(){
+        Collection<SymbolOnly> symbols;
+        symbols = unityRespository.findAllSummarizedBy();
+        return symbols;
+    }
+
+
     @GetMapping("/convert")
     public String unitForm(Model model){
         InputContent res = new InputContent();
 
-//        List<String> allInData = new ArrayList<String>();
-//        allInData.add("M²");
-//        res.setAllInputData(allInData);
-
-
-
+        List<String> allInData = new ArrayList<>();
+        allInData.add("m2");
+        allInData.add("Kw");
+        allInData.add("hectare");
+        allInData.add("Co2");
+        res.setAllInputData(allInData);
         model.addAttribute("result", res);
         return "Converter";
     }
@@ -55,9 +71,15 @@ public class ConvertController {
     public String unitConverter(Model model, @Valid @ModelAttribute("data")InputContent data, BindingResult bindingResult) {
         InputContent res2 = new InputContent();
         if(bindingResult.hasErrors()){
-            bindingResultError(model, bindingResult);
+            errorsApi.bindingResultError(model, bindingResult);
+            model.addAttribute("result",data);
             return "Converter";
-        } else if (data.getValue() > 0 && !bindingResult.hasErrors()){
+
+        } else if(data.getValue() < 0 && !bindingResult.hasErrors()) {
+            errorsApi.negativeNumberError(model);
+            model.addAttribute("result", data);
+
+        }else if (data.getValue() > 0 && !bindingResult.hasErrors()){
             Double res = calculMethodToChoose(data);
 
             res2.setInputState(data.getInputState());
@@ -65,35 +87,25 @@ public class ConvertController {
             res2.setValue(res);
 
             addAttributeToModel(model, data, res2);
-        }else if(data.getValue() < 0 && !bindingResult.hasErrors()){
-            negativeNumberError(model);
+
+        } else {
+            model.addAttribute("result", data);
         }
+
 
         return "Converter";
     }
 
     private Double calculMethodToChoose(InputContent data){
         Double res = null;
-        if (data.getInputState().equals("m2") && data.getOutputState().equals("hectare")) {
-            res = unitConverterService.meterToHectare(data.getValue());
+        if (data.getInputState().equals("m2") || data.getInputState().equals("hectare")) {
+            res = unitConverterService.convert(data.getValue(), SI.SQUARE_METRE, AdditionalUnits.HECTARE);
         } else if (data.getInputState().equals("Kw") && data.getOutputState().equals("Co2")) {
-            res = unitConverterService.kwatttoco2(data.getValue());
-        } else if (data.getInputState().equals("hectare") && data.getOutputState().equals("m2")) {
-            res = unitConverterService.hectareToMeter(data.getValue());
+            res = unitConverterService.convertKwattCo2(data.getValue(), data);
         } else if (data.getInputState().equals("Co2") && data.getOutputState().equals("Kw")) {
-            res = unitConverterService.co2ToKwatt(data.getValue());
+            res = unitConverterService.convertKwattCo2(data.getValue(), data);
         }
-
         return res;
-    }
-
-    private void negativeNumberError(Model model){
-        model.addAttribute("negativeNumber", "you cannot insert negative number");
-    }
-
-    private void bindingResultError(Model model, BindingResult bindingResult){
-        model.addAttribute("errorMessage", "Veuillez corriger les erreurs suivantes :");
-        model.addAttribute("bindingResult", bindingResult);
     }
 
     private void addAttributeToModel(Model model, InputContent data, InputContent res2){

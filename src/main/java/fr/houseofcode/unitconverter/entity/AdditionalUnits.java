@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.houseofcode.unitconverter.entity;
 
 import javax.measure.Unit;
@@ -18,7 +15,8 @@ import tec.uom.se.unit.Units;
  */
 public class AdditionalUnits extends Units {
 
-    protected AdditionalUnits() {
+
+    private AdditionalUnits() {
     }
 
     private static final AdditionalUnits INSTANCE = new AdditionalUnits();
@@ -41,9 +39,9 @@ public class AdditionalUnits extends Units {
      * An angle unit accepted for use with SI units (standard name
      * <code>ha</code>).
      */
-    public static final Unit<Area> HECTARE = new TransformedUnit<Area>(SQUARE_METRE, new RationalConverter(10000, 1));
+    public static final Unit<Area> HECTARE = new TransformedUnit<>(SQUARE_METRE, new RationalConverter(10000, 1));
 
-    public static final Unit<Power> KWATT = new TransformedUnit<Power>(WATT, new RationalConverter(1000, 1));
+    public static final Unit<Power> KWATT = new TransformedUnit<>(WATT, new RationalConverter(1000, 1));
 
     public static <U extends Unit<?>> U addUnit(U unit, String name, String symbol) {
         //        if (isLabel) {
