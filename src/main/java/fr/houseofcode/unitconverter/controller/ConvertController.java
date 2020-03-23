@@ -90,13 +90,13 @@ public class ConvertController {
 
     private Double calculMethodToChoose(InputContent data){
         Double res = null;
-        if (data.getInputState().equals("m2") && data.getOutputState().equals("hectare")) {
+        if (data.getInputState().equals("m²") && data.getOutputState().equals("ha")) {
             res = unitConverterService.convert(data.getValue(), SI.SQUARE_METRE, AdditionalUnits.HECTARE);
-        }else if(data.getInputState().equals("hectare") && data.getOutputState().equals("m2")) {
+        }else if(data.getInputState().equals("ha") && data.getOutputState().equals("m²")) {
             res = unitConverterService.convert(data.getValue(), AdditionalUnits.HECTARE, SI.SQUARE_METRE);
-        } else if (data.getInputState().equals("Kw") && data.getOutputState().equals("Co2")) {
+        } else if (data.getInputState().equals("kW") && data.getOutputState().equals("Co²")) {
             res = unitConverterService.convertKwattCo2(data.getValue(), data);
-        } else if (data.getInputState().equals("Co2") && data.getOutputState().equals("Kw")) {
+        } else if (data.getInputState().equals("Co²") && data.getOutputState().equals("kW")) {
             res = unitConverterService.convertKwattCo2(data.getValue(), data);
         }
 
