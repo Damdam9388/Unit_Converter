@@ -17,9 +17,7 @@ import fr.houseofcode.unitconverter.service.UnitConverterService;
 import si.uom.SI;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Controller
 public class ConvertController {
@@ -54,7 +52,9 @@ public class ConvertController {
 
 
     @GetMapping("/convert")
-    public String unitForm(){
+    public String unitForm(Model model){
+        InputContent res = new InputContent();
+        model.addAttribute("result", res);
         return "Converter";
     }
 
