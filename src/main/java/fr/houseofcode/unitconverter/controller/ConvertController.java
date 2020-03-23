@@ -94,6 +94,10 @@ public class ConvertController {
             res = unitConverterService.convert(data.getValue(), SI.SQUARE_METRE, AdditionalUnits.HECTARE);
         }else if(data.getInputState().equals("ha") && data.getOutputState().equals("m²")) {
             res = unitConverterService.convert(data.getValue(), AdditionalUnits.HECTARE, SI.SQUARE_METRE);
+        }else if(data.getInputState().equals("km²") && data.getOutputState().equals("m²")) {
+            res = unitConverterService.convert(data.getValue(), AdditionalUnits.SQUARE_KILOMETER, SI.SQUARE_METRE);
+        }else if(data.getInputState().equals("m²") && data.getOutputState().equals("km²")) {
+            res = unitConverterService.convert(data.getValue(), SI.SQUARE_METRE, AdditionalUnits.SQUARE_KILOMETER);
         } else if (data.getInputState().equals("kW") && data.getOutputState().equals("Co²")) {
             res = unitConverterService.convertKwattCo2(data.getValue(), data);
         } else if (data.getInputState().equals("Co²") && data.getOutputState().equals("kW")) {

@@ -43,6 +43,8 @@ public class AdditionalUnits extends Units {
 
     public static final Unit<Power> KWATT = new TransformedUnit<>(WATT, new RationalConverter(1000, 1));
 
+    public static final Unit<Area> SQUARE_KILOMETER = new TransformedUnit<>(SQUARE_METRE, new RationalConverter(1000000, 1));
+
     public static <U extends Unit<?>> U addUnit(U unit, String name, String symbol) {
         //        if (isLabel) {
         //            SimpleUnitFormat.getInstance().label(unit, text);
