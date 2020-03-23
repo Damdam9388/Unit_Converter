@@ -54,16 +54,7 @@ public class ConvertController {
 
 
     @GetMapping("/convert")
-    public String unitForm(Model model){
-        InputContent res = new InputContent();
-
-        List<String> allInData = new ArrayList<>();
-        allInData.add("m2");
-        allInData.add("Kw");
-        allInData.add("hectare");
-        allInData.add("Co2");
-        res.setAllInputData(allInData);
-        model.addAttribute("result", res);
+    public String unitForm(){
         return "Converter";
     }
 
