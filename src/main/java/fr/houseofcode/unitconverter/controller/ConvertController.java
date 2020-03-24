@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import fr.houseofcode.unitconverter.service.UnitConverterService;
 import org.springframework.web.servlet.ModelAndView;
 import si.uom.SI;
+import tec.uom.se.unit.BaseUnit;
 
+import javax.measure.Unit;
 import javax.validation.Valid;
 import java.util.Collection;
 
@@ -39,19 +40,21 @@ public class ConvertController {
         return "BindException";
     }
 
+    @ExceptionHandler({NumberFormatException.class})
+    public ModelAndView unitNumberExeption() {
+        return null;
+    }
+
     @ExceptionHandler({UnitException.class})
-    public String unitExceptionHandler(UnitException uE, Model model){
-        //uE.getMessage();
-        InputContent res = new InputContent();
+    public ModelAndView unitExceptionHandler(UnitException uE){
+        ModelAndView modelAndView = new ModelAndView();
+        InputContent inputContent = new InputContent();
 
-        String key = BindingResult.MODEL_KEY_PREFIX + "convert";
-        BindingResult bindingResult = (BindingResult) model.getAttribute(key);
-        ObjectError error = new ObjectError("outputState", uE.getMessage());
-        bindingResult.addError(error);
-
-        errorsApi.bindingResultError(model, bindingResult);
-        model.addAttribute("result", res);
-        return "Converter";
+        modelAndView.setViewName("Converter");
+        modelAndView.addObject("result", inputContent);
+        modelAndView.addObject("unitList", loadAllInputData());
+        errorsApi.exeptionError(uE, modelAndView);
+        return modelAndView;
     }
 
     @ModelAttribute("unitList")
@@ -99,26 +102,28 @@ public class ConvertController {
         return "Converter";
     }
 
-    private Double calculMethodToChoose(InputContent data) throws Exception {
+    private Double calculMethodToChoose(InputContent data) {
         Double res = null;
-        if (data.getInputState().equals("m²") && data.getOutputState().equals("ha")) {
-            res = unitConverterService.convert(data.getValue(), SI.SQUARE_METRE, AdditionalUnits.HECTARE);
-        }else if(data.getInputState().equals("ha") && data.getOutputState().equals("m²")) {
-            res = unitConverterService.convert(data.getValue(), AdditionalUnits.HECTARE, SI.SQUARE_METRE);
-        }else if(data.getInputState().equals("km²") && data.getOutputState().equals("m²")) {
-            res = unitConverterService.convert(data.getValue(), AdditionalUnits.SQUARE_KILOMETER, SI.SQUARE_METRE);
-        }else if(data.getInputState().equals("m²") && data.getOutputState().equals("km²")) {
-            res = unitConverterService.convert(data.getValue(), SI.SQUARE_METRE, AdditionalUnits.SQUARE_KILOMETER);
-        } else if(data.getInputState().equals("km²") && data.getOutputState().equals("ha")) {
-            res = unitConverterService.convert(data.getValue(), AdditionalUnits.SQUARE_KILOMETER, AdditionalUnits.HECTARE);
-        } else if (data.getInputState().equals("ha") && data.getOutputState().equals("km²")) {
-            res = unitConverterService.convert(data.getValue(), AdditionalUnits.HECTARE, AdditionalUnits.SQUARE_KILOMETER);
-        } else if (data.getInputState().equals("kW") && data.getOutputState().equals("Co²")) {
-            res = unitConverterService.convertKwattCo2(data.getValue(), data);
-        } else if (data.getInputState().equals("Co²") && data.getOutputState().equals("kW")) {
-            res = unitConverterService.convertKwattCo2(data.getValue(), data);
-        } else{
-            throw new UnitException("oups marche pas");
+        Boolean hasError = false;
+        Unit srcUnit = fromString(data.getInputState());
+        Unit targetUnit = fromString(data.getOutputState());
+
+        if (data.getInputState().equals(data.getOutputState())) {
+            throw  new UnitException("veuillez chosir une source differente de la destination");
+        }
+        try {
+            res = unitConverterService.convert(data.getValue(), srcUnit, targetUnit);
+        } catch (NullPointerException e) {
+            hasError = true;
+        }
+        if (hasError) {
+            if (data.getInputState().equals("kW") && data.getOutputState().equals("Co²")) {
+                res = unitConverterService.convertKwattCo2(data.getValue(), data);
+            } else if (data.getInputState().equals("Co²") && data.getOutputState().equals("kW")) {
+                res = unitConverterService.convertKwattCo2(data.getValue(), data);
+            } else{
+                throw new UnitException("on ne sais pas convertir !!");
+            }
         }
         return res;
     }
@@ -128,5 +133,23 @@ public class ConvertController {
         model.addAttribute("inputUnit", data.getInputState());
         model.addAttribute("outputUnit", data.getOutputState());
         model.addAttribute("result", res2);
+    }
+
+    private Unit fromString(String unitStr){
+        Unit res = null;
+        if (unitStr.equals("m²")) {
+            res = SI.SQUARE_METRE;
+        } else if(unitStr.equals("ha")){
+            res = AdditionalUnits.HECTARE;
+        } else if(unitStr.equals("km²")) {
+            res = AdditionalUnits.SQUARE_KILOMETER;
+        } else if(unitStr.equals("kW")) {
+            //FIXME create Unit;
+            res =null;
+        } else if(unitStr.equals("Co²")) {
+            //FIXME create Unit;
+            res =null;
+        }
+        return res;
     }
 }

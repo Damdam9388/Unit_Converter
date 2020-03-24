@@ -43,9 +43,9 @@
                                 </div>
                                     <span th:text="${errorMessage}"></span>
                                     <div class="alert alert-danger alert-dismissible col-sm-12"
-                                    th:if="${bindingResult != null && bindingResult.getAllErrors() != null}">
-                                        <ul th:each="data : ${bindingResult.getAllErrors()}">
-                                            <li th:text="${data.getDefaultMessage()}"></li>
+                                    th:if="${errors != null && errors.size()>0}">
+                                        <ul th:each="data : ${errors}">
+                                            <li th:text="${data}"></li>
                                         </ul>
                                     </div>
                                 </form>

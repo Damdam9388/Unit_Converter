@@ -20,10 +20,10 @@ public class UnitConverterService {
     private Double result = null;
 
     public Double convertKwattCo2(double value, InputContent data){
-        if(data.getInputState().equals("Kw") && data.getOutputState().equals("Co2")){
+        if(data.getInputState().equals("kW") && data.getOutputState().equals("Co²")){
             result = convert(value, SI.WATT,AdditionalUnits.KWATT);
             result = result * 0.09;
-        } else if(data.getInputState().equals("Co2") && data.getOutputState().equals("Kw")){
+        } else if(data.getInputState().equals("Co²") && data.getOutputState().equals("kW")){
             UnitConverter watt = AdditionalUnits.KWATT.getConverterTo(AdditionalUnits.WATT);
             result = watt.convert(value);
             result = result / 0.09;
