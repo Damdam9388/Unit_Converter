@@ -1,6 +1,5 @@
 package fr.houseofcode.unitconverter.service;
 
-import fr.houseofcode.unitconverter.exceptions.UnitException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,9 +25,9 @@ public class ErrorsApi {
         model.addAttribute("errorMessage", "Veuillez corriger les erreurs suivantes :");
         model.addAttribute("errors", errors);
     }
-    public void exeptionError(UnitException uE, ModelAndView modelAndView) {
+    public void exeptionError(Exception e, ModelAndView modelAndView) {
         List<String> errors = new ArrayList();
-        errors.add(uE.getMessage());
+        errors.add(e.getMessage());
         modelAndView.addObject("errorMessage", "Veuillez corriger les erreurs suivantes :");
         modelAndView.addObject("errors", errors);
     }

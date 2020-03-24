@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import fr.houseofcode.unitconverter.service.UnitConverterService;
 import org.springframework.web.servlet.ModelAndView;
 import si.uom.SI;
-import tec.uom.se.unit.BaseUnit;
 
 import javax.measure.Unit;
 import javax.validation.Valid;
@@ -40,20 +39,15 @@ public class ConvertController {
         return "BindException";
     }
 
-    @ExceptionHandler({NumberFormatException.class})
-    public ModelAndView unitNumberExeption() {
-        return null;
-    }
-
-    @ExceptionHandler({UnitException.class})
-    public ModelAndView unitExceptionHandler(UnitException uE){
+    @ExceptionHandler({UnitException.class, Exception.class})
+    public ModelAndView unitExceptionHandler(Exception e){
         ModelAndView modelAndView = new ModelAndView();
         InputContent inputContent = new InputContent();
 
         modelAndView.setViewName("Converter");
         modelAndView.addObject("result", inputContent);
         modelAndView.addObject("unitList", loadAllInputData());
-        errorsApi.exeptionError(uE, modelAndView);
+        errorsApi.exeptionError(e, modelAndView);
         return modelAndView;
     }
 
