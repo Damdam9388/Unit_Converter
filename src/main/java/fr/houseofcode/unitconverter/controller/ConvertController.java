@@ -2,6 +2,7 @@ package fr.houseofcode.unitconverter.controller;
 
 import fr.houseofcode.unitconverter.entity.*;
 import fr.houseofcode.unitconverter.exceptions.UnitException;
+import fr.houseofcode.unitconverter.service.AdditionalUnits;
 import fr.houseofcode.unitconverter.service.ErrorsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

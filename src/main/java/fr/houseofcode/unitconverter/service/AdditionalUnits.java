@@ -1,4 +1,4 @@
-package fr.houseofcode.unitconverter.entity;
+package fr.houseofcode.unitconverter.service;
 
 import javax.measure.Unit;
 import javax.measure.quantity.Area;
