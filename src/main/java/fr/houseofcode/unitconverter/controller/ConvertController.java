@@ -1,9 +1,13 @@
 package fr.houseofcode.unitconverter.controller;
 
+import fr.houseofcode.unitconverter.dto.HistoryData;
+import fr.houseofcode.unitconverter.dto.InputContent;
 import fr.houseofcode.unitconverter.entity.*;
+import fr.houseofcode.unitconverter.entity.datarepository.UnityRespository;
 import fr.houseofcode.unitconverter.exceptions.UnitException;
 import fr.houseofcode.unitconverter.service.AdditionalUnits;
 import fr.houseofcode.unitconverter.service.ErrorsApi;
+import fr.houseofcode.unitconverter.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +30,16 @@ import java.util.Collection;
 public class ConvertController {
     private UnitConverterService unitConverterService;
     private ErrorsApi errorsApi;
+    private HistoryService historyService;
+
+    //TODO remove?
     private UnityRespository unityRespository;
 
-    public ConvertController(@Autowired UnitConverterService unitConverterService, @Autowired ErrorsApi errorsApi, @Autowired UnityRespository unityRespository){
+    public ConvertController(@Autowired UnitConverterService unitConverterService, @Autowired ErrorsApi errorsApi, @Autowired HistoryService historyService, @Autowired UnityRespository unityRespository){
         this.unitConverterService = unitConverterService;
         this.errorsApi = errorsApi;
+        this.historyService = historyService;
+        //TODO remove?
         this.unityRespository = unityRespository;
     }
 
@@ -64,6 +73,10 @@ public class ConvertController {
     public String unitForm(Model model){
         InputContent res = new InputContent();
         model.addAttribute("result", res);
+        HistoryData historyData = new HistoryData();
+        historyData.setHistoryList(historyService.getAll());
+        model.addAttribute("historyList", historyData);
+
         return "Converter";
     }
 
@@ -94,6 +107,7 @@ public class ConvertController {
             model.addAttribute("result", data);
 
         }
+
         return "Converter";
     }
 

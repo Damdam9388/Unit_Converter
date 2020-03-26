@@ -4,7 +4,7 @@ import javax.measure.Quantity;
 import javax.measure.Unit;
 import javax.measure.UnitConverter;
 
-import fr.houseofcode.unitconverter.entity.InputContent;
+import fr.houseofcode.unitconverter.dto.InputContent;
 import org.springframework.stereotype.Service;
 
 import si.uom.SI;

@@ -3,14 +3,11 @@
 <body>
 <header th:insert="layout/Navbar.html :: header"></header>
 <div class="jumbotron">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6 mx-auto">
-
+    <div class="container-fluid">
+                <div class="row" style="margin-top: 5vh;opacity: 90%">
+                    <div class="col-md-4">
                         <!-- form card login -->
-                        <div class="card rounded-0" style="margin-top: 15%;opacity: 90%">
+                        <div class="card rounded-0">
                             <div class="card-header" style="text-align: center;">
                                 <h3 class="mb-0">Unit converter</h3>
                             </div>
@@ -58,13 +55,41 @@
                         </div>
                         <!-- /form card login -->
                     </div>
-
+                    <div class="offset-md-4 col-md-4">
+                        <div class="card rounded-0">
+                            <div class="card-header" style="text-align: center;">
+                                <h3 class="mb-0">History</h3>
+                            </div>
+                            <div class="card-body">.
+                                <ul class="list-group">
+                                    <li class="list-group-item">10 dernieres conversion</li>
+                                </ul>
+                             <!--   <table class="table table-striped text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">value</th>
+                                        <th scope="col">src_unit</th>
+                                        <th scope="col">target_unit</th>
+                                        <th scope="col">result</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <th:block th:if="${historyList != null}">
+                                    <tr th:each="history : ${historyList}">
+                                        <th scope="row" th:text="*{value}">1</th>
+                                        <td th:text="*{unity.symbol}">m²</td>
+                                        <td>ha</td>
+                                        <td th:text="*{result}">0.0001</td>
+                                    </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>-->
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!--/row-->
-
-            </div>
             <!--/col-->
-        </div>
     </div>
 </div>
 

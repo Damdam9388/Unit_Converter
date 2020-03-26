@@ -1,7 +1,7 @@
 package fr.houseofcode.unitconverter.controller;
 
-import fr.houseofcode.unitconverter.entity.Unity;
-import fr.houseofcode.unitconverter.entity.UnityRespository;
+import fr.houseofcode.unitconverter.entity.datamodel.Unity;
+import fr.houseofcode.unitconverter.entity.datarepository.UnityRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package fr.houseofcode.unitconverter.entity;
+package fr.houseofcode.unitconverter.dto;
 
 import lombok.Data;
 import lombok.Getter;
