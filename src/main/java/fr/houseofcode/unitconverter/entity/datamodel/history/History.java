@@ -14,7 +14,7 @@ public class History {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private  Date calculationDate;
-    private  Long value;
-    private  Long result;
+    private  Double value;
+    private  Double result;
 
 }

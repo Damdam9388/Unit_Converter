@@ -13,5 +13,6 @@ public interface UnityRespository extends CrudRepository<Unity, Long> {
     @Query("select new fr.houseofcode.unitconverter.entity.SymbolOnly(u.symbole) from Unity u")
     Collection<SymbolOnly> findAllSummarizedBy();
     List<Unity> findAll();
+    Unity findBySymbole(String symbol);
 
 }

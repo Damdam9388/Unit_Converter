@@ -105,7 +105,7 @@ public class ConvertController {
 
         } else {
             model.addAttribute("result", data);
-
+            historyService.save(data, res2);
         }
 
         return "Converter";
