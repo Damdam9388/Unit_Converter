@@ -14,7 +14,7 @@ public class Unity {
     private Long id;
     private String symbole;
     private String definition;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Source source;
 
     @Override
@@ -23,6 +23,5 @@ public class Unity {
                 "Unity[id=%d, symbole='%s', definition='%s']",
                 id, symbole, definition);
     }
-
 
 }

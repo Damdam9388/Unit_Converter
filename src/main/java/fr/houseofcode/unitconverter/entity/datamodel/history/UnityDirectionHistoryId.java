@@ -16,7 +16,6 @@ public class UnityDirectionHistoryId implements Serializable {
     private History history;
 
     public UnityDirectionHistoryId(Unity unity, Direction direction, History history) {
-
         this.unity = unity;
         this.direction = direction;
         this.history = history;

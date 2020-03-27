@@ -8,6 +8,7 @@ import fr.houseofcode.unitconverter.exceptions.UnitException;
 import fr.houseofcode.unitconverter.service.AdditionalUnits;
 import fr.houseofcode.unitconverter.service.ErrorsApi;
 import fr.houseofcode.unitconverter.service.HistoryService;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,17 +18,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import fr.houseofcode.unitconverter.service.UnitConverterService;
 import org.springframework.web.servlet.ModelAndView;
 import si.uom.SI;
-
 import javax.measure.Unit;
 import javax.validation.Valid;
 import java.util.Collection;
+import org.apache.logging.log4j.Logger;
 
 @Controller
 public class ConvertController {
+    Logger logger = LogManager.getLogger(ConvertController.class);
+
     private UnitConverterService unitConverterService;
     private ErrorsApi errorsApi;
     private HistoryService historyService;
@@ -71,6 +73,7 @@ public class ConvertController {
 
     @GetMapping("/convert")
     public String unitForm(Model model){
+        logger.debug("affichage de la page de conversion");
         InputContent res = new InputContent();
         model.addAttribute("result", res);
         HistoryData historyData = new HistoryData();
@@ -82,16 +85,42 @@ public class ConvertController {
 
     @PostMapping("/convert")
     public String unitConverter(Model model, @Valid @ModelAttribute("data")InputContent data, BindingResult bindingResult) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append("conversion de ")
+                .append(data.getValue())
+                .append(' ')
+                .append(data.getInputState())
+                .append(" en ")
+                .append(data.getOutputState())
+                .append(" est en cours");
+
+        logger.info(sb.toString());
+
         InputContent res2 = new InputContent();
 
         if(bindingResult.hasErrors()){
             errorsApi.bindingResultError(model, bindingResult);
             model.addAttribute("result",data);
+            StringBuilder sb2 = new StringBuilder();
+            sb2.append("echec de la conversion de ")
+                    .append(data.getValue())
+                    .append(data.getInputState())
+                    .append(" en")
+                    .append(data.getOutputState());
+            logger.warn(sb2.toString());
             return "Converter";
 
         } else if(data.getValue() < 0 && !bindingResult.hasErrors()) {
             errorsApi.negativeNumberError(model);
             model.addAttribute("result", data);
+            StringBuilder sb3 = new StringBuilder();
+            sb3.append("echec de la conversion de ")
+                    .append(data.getValue())
+                    .append(data.getInputState())
+                    .append(" en")
+                    .append(data.getOutputState())
+                    .append(", aucune valeur saisi");
+            logger.info(sb3.toString());
             return "Converter";
 
         }else if(data.getValue() > 0 && !bindingResult.hasErrors()){
@@ -105,8 +134,19 @@ public class ConvertController {
 
         } else {
             model.addAttribute("result", data);
-            historyService.save(data, res2);
         }
+        StringBuilder sb4 = new StringBuilder();
+        sb4.append("conversion de ")
+                .append(data.getValue())
+                .append(data.getInputState())
+                .append(" en ")
+                .append(data.getOutputState())
+                .append(" à le resultat ")
+                .append(res2.getValue())
+                .append(data.getOutputState());
+        logger.info(sb4.toString());
+
+        historyService.save(data, res2);
 
         return "Converter";
     }
@@ -118,7 +158,9 @@ public class ConvertController {
         Unit targetUnit = fromString(data.getOutputState());
 
         if (data.getInputState().equals(data.getOutputState())) {
-            throw  new UnitException("veuillez chosir une source differente de la destination");
+            UnitException uE = new UnitException("veuillez chosir une source differente de la destination");
+            logger.error("echec de la conversion", uE);
+            throw  uE;
         }
         try {
             res = unitConverterService.convert(data.getValue(), srcUnit, targetUnit);
@@ -131,7 +173,9 @@ public class ConvertController {
             } else if (data.getInputState().equals("Co²") && data.getOutputState().equals("kW")) {
                 res = unitConverterService.convertKwattCo2(data.getValue(), data);
             } else{
-                throw new UnitException("on ne sais pas convertir !!");
+                UnitException uE = new UnitException("on ne sais pas convertir !!");
+                logger.error("Conversion impossible", uE);
+                throw uE;
             }
         }
         return res;
