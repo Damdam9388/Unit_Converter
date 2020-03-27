@@ -64,7 +64,7 @@
                                 <ul class="list-group">
                                     <li class="list-group-item">10 dernieres conversion</li>
                                 </ul>
-                               <!-- <table class="table table-striped text-center">
+                                <table class="table table-striped text-center">
                                     <thead>
                                     <tr>
                                         <th scope="col">value</th>
@@ -74,16 +74,16 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <th:block th:if="${historyList != null}">
-                                    <tr th:each="history : ${historyList}">
-                                        <th scope="row" th:text="*{value}">1</th>
-                                        <td th:text="*{unity.symbol}">m²</td>
-                                        <td>ha</td>
-                                        <td th:text="*{result}">0.0001</td>
+                                    <th:block th:if="${historyData != null}">
+                                    <tr th:each="history : ${historyData.historyList}">
+                                        <th scope="row" th:text="${history.value}">1</th>
+                                        <td th:text="${history.unityDirectionHistory[0].unity.symbole}">m²</td>
+                                        <td th:text="${history.unityDirectionHistory[1].unity.symbole}">ha</td>
+                                        <td th:text="${history.result}">0.0001</td>
                                     </tr>
                                     </th:block>
                                     </tbody>
-                                </table>-->
+                                </table>
                             </div>
                         </div>
                     </div>

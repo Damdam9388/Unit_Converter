@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class HistoryService {
@@ -37,7 +38,7 @@ public class HistoryService {
     }
 
     public Iterable<History> getAll() {
-        Iterable<History> historyList = historyRepository.findAll();
+        Iterable<History> historyList = historyRepository.findAllByOrderByCalculationDateAsc();
         return historyList;
     }
     public void save(InputContent data, InputContent res) {
@@ -55,7 +56,7 @@ public class HistoryService {
 
         UnityDirectionHistory unityDirectionHistoryTarget = new UnityDirectionHistory();
         unityDirectionHistoryTarget.setDirection(directionRepository.findByType(DIR_TARGET));
-        Unity unityTarget = unityRespository.findBySymbole(res.getInputState());
+        Unity unityTarget = unityRespository.findBySymbole(res.getOutputState());
         unityDirectionHistoryTarget.setUnity(unityTarget);
         history.addUnity(unityDirectionHistoryTarget);
 
@@ -63,8 +64,9 @@ public class HistoryService {
 
         logger.info("Save success");
     }
-    public void getLastTen() {
-        //TODO get last ten result
+    public Iterable<History> getLastTen() {
+        List<History> history10List = historyRepository.findFirst10ByOrderByCalculationDateDesc();
+        return history10List;
     }
 
     public void init() {

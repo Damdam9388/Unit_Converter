@@ -1,13 +1,14 @@
-package fr.houseofcode.unitconverter.server;
+package fr.houseofcode.unitconverter.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServerApplicationTests {
+class ConvertControllerIT {
 
 	@Test
-	void contextLoads() {
+	void shouldSuccessWhenConvert() {
+
 	}
 
 }

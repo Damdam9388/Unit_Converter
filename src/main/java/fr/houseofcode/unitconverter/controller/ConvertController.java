@@ -24,6 +24,7 @@ import si.uom.SI;
 import javax.measure.Unit;
 import javax.validation.Valid;
 import java.util.Collection;
+
 import org.apache.logging.log4j.Logger;
 
 @Controller
@@ -70,15 +71,30 @@ public class ConvertController {
         return symbols;
     }
 
+   /* *//**
+    * We cannot use @modelAttribute because we need refresh <b>AFTER</b> post execution.
+    *//*
+    public HistoryData loadAllHistoryData(){
+        HistoryData historyData = new HistoryData();
+        historyData.setHistoryList(historyService.getAll());
+        return historyData;
+    }*/
+    /**
+     * We cannot use @modelAttribute because we need refresh <b>AFTER</b> post execution.
+     */
+    public HistoryData loadLast10HistoryData(){
+        HistoryData historyData = new HistoryData();
+        historyData.setHistoryList(historyService.getLastTen());
+        return historyData;
+    }
+
 
     @GetMapping("/convert")
     public String unitForm(Model model){
         logger.debug("affichage de la page de conversion");
         InputContent res = new InputContent();
         model.addAttribute("result", res);
-        HistoryData historyData = new HistoryData();
-        historyData.setHistoryList(historyService.getAll());
-        model.addAttribute("historyList", historyData);
+        model.addAttribute("historyData", loadLast10HistoryData());
 
         return "Converter";
     }
@@ -147,6 +163,7 @@ public class ConvertController {
         logger.info(sb4.toString());
 
         historyService.save(data, res2);
+        model.addAttribute("historyData", loadLast10HistoryData());
 
         return "Converter";
     }

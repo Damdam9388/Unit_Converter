@@ -2,6 +2,7 @@ package fr.houseofcode.unitconverter.entity.datamodel.history;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +27,7 @@ public class History {
     public History(){
         unityDirectionHistory = new ArrayList<>();
     }
+
     public void addUnity(UnityDirectionHistory unityDirectionHistory){
         this.unityDirectionHistory.add(unityDirectionHistory);
         unityDirectionHistory.setHistory(this);

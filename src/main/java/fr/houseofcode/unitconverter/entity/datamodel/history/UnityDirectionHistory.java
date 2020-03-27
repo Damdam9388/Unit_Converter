@@ -1,10 +1,7 @@
 package fr.houseofcode.unitconverter.entity.datamodel.history;
 
 import fr.houseofcode.unitconverter.entity.datamodel.Unity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,4 +26,12 @@ public class UnityDirectionHistory implements Serializable {
     @ManyToOne
     @JoinColumn
     History history;
+
+    @Override
+    public String toString() {
+        return "UnityDirectionHistory{" +
+                "unity=" + unity +
+                ", direction=" + direction +
+                '}';
+    }
 }
