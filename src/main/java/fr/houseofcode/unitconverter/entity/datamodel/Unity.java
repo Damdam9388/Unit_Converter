@@ -1,29 +1,21 @@
-package fr.houseofcode.unitconverter.entity;
+package fr.houseofcode.unitconverter.entity.datamodel;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@ToString
 public class Unity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String symbole;
     private String definition;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Source source;
-
-    @Override
-    public String toString() {
-        return String.format(
-                "Unity[id=%d, symbole='%s', definition='%s']",
-                id, symbole, definition);
-    }
-
-
 }

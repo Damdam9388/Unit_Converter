@@ -1,4 +1,4 @@
-package fr.houseofcode.unitconverter.entity;
+package fr.houseofcode.unitconverter.dto;
 
 import lombok.Data;
 import lombok.Getter;
@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,6 +22,7 @@ public class InputContent {
     @NotEmpty(message = "vous devez renseigner une unité de sortie")
     private String outputState;
 
+    private List<String> errors= new ArrayList<>();
     private  List<String> allInputData;
 
 }
